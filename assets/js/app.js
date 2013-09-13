@@ -8,42 +8,10 @@ $(document).ready(function () {
 	is_error_reported_on_form_validation = $('#error').val();
 	var from_country = $('#id_country').val();
 	buildCountryList();
-
-	if (is_error_reported_on_form_validation === NO_ERROR)
-	{
-	// This three will add selectboxes for 3 default countries Europe not EU,European Union and  Everywhere else
-	addSelectBoxes();
-	addSelectBoxes();
-	addSelectBoxes();
-	}
-	
-	if(is_error_reported_on_form_validation === ERROR_REPORTED){
-		
-		selectboxHandler();
-		
-	}
-	// these next 4 methods manually trigger change event for selectboxes
+	initialize();
 	$('#id_form-0-country').trigger('change',[from_country])
-	
-	if(is_error_reported_on_form_validation === ERROR_REPORTED)
-	{
-		var count = $('#sell_to').children().length;
-		for (var i=0; i < count; i++) {
-		  var ctry = $('#id_form-'+ i+ '-country').val();
-		  if (ctry !== ''){
-		  $('#id_form-'+ i+ '-country').trigger('change',ctry);
-		  }
-		};
-	}
-	else
-	{
-	$('#id_form-2-country').trigger('change',['5']); // the id of Europe not EU
-	$('#id_form-1-country').trigger('change',['6']); // the id of European Union 
-	$('#id_form-3-country').trigger('change',['7']);
-	}
-	
 	$('select[id^="id_form"]').on('change',handleCountrySelection);
-	
+
 	$('#add_more').click(function(){
 		   //the template defined in add_art called art-template
 			var tmplMarkup = $('#art-template').html(); 
@@ -213,5 +181,33 @@ var selectboxHandler = function(){
 				$('.remove_del').on('click',handleRemoveRow);
 				
 			})
+	
+}
+
+var initialize = function(){
+	
+	if (is_error_reported_on_form_validation === NO_ERROR)
+	{
+		// This three will add selectboxes for 3 default countries Europe not EU,European Union and  Everywhere else
+		addSelectBoxes();
+		addSelectBoxes();
+		addSelectBoxes();
+		$('#id_form-2-country').trigger('change',['5']); 
+		$('#id_form-1-country').trigger('change',['6']);  
+		$('#id_form-3-country').trigger('change',['7']);
+	}
+	
+	if(is_error_reported_on_form_validation === ERROR_REPORTED){
+		
+		selectboxHandler();
+		var count = $('#sell_to').children().length;
+		for (var i=0; i < count; i++) {
+		  var ctry = $('#id_form-'+ i+ '-country').val();
+		  if (ctry !== ''){
+		  $('#id_form-'+ i+ '-country').trigger('change',ctry);
+		  }
+		};
+		
+	}
 	
 }
