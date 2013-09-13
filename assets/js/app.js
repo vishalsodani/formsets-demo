@@ -23,7 +23,6 @@ $(document).ready(function () {
 			var compiledTmpl = compileTemplate(count);
 			var new_list = new Array;
 			new_list = country_list;
-			var selectboxes =  $('select[id^="id_form"]');
 			
 			$('select[id^="id_form"]').each(function(){
 				
@@ -143,9 +142,8 @@ var addSelectBoxes = function(){
 			var compiledTmpl = _.template(tmplMarkup, { id : count });
 			var new_list = new Array;
 			new_list = country_list;
-			var selectboxes =  $('select[id^="id_form"]');
 			
-			$('select[id^="id_form"]').each(function(){
+			$(PATTERN_OF_ID_OF_SELECT).each(function(){
 				
 				var sel_obj = $(this);
 				new_list = _.reject(new_list,function(obj){return obj.id==sel_obj.val() ;});
