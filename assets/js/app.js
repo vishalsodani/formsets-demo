@@ -1,12 +1,15 @@
+var NO_ERROR = '';
+var ERROR_REPORTED = '1';
 var country_list = new Array;
-var is_error_reported_on_form_validation = '';
+var is_error_reported_on_form_validation = NO_ERROR;
+
 $(document).ready(function () {
 	
 	is_error_reported_on_form_validation = $('#error').val();
 	var from_country = $('#id_country').val();
 	buildCountryList();
 
-	if (is_error_reported_on_form_validation === '')
+	if (is_error_reported_on_form_validation === NO_ERROR)
 	{
 	// This three will add selectboxes for 3 default countries Europe not EU,European Union and  Everywhere else
 	addSelectBoxes();
@@ -14,7 +17,7 @@ $(document).ready(function () {
 	addSelectBoxes();
 	}
 	
-	if(is_error_reported_on_form_validation === '1'){
+	if(is_error_reported_on_form_validation === ERROR_REPORTED){
 		
 		selectboxHandler();
 		
@@ -22,7 +25,7 @@ $(document).ready(function () {
 	// these next 4 methods manually trigger change event for selectboxes
 	$('#id_form-0-country').trigger('change',[from_country])
 	
-	if(is_error_reported_on_form_validation === '1')
+	if(is_error_reported_on_form_validation === ERROR_REPORTED)
 	{
 		var count = $('#sell_to').children().length;
 		for (var i=0; i < count; i++) {
