@@ -1,0 +1,21 @@
+<table>
+{% for art in arts %}
+<tr><td>{{art.name}}</td>
+	<td>{{art.id}}</td>
+</tr>
+
+{% endfor %}
+</table>
+<hr />
+<table>
+<th>ID</th><th>ART RELATION</th><th>PRICE</th><th>COUNTRY</th>
+{% for del in delivery_list %}
+
+<tr><td>{{del.id}}</td>
+<td>{{del.art.name}}</td>
+<td>{{del.price}}</td>
+<td>{{del.country}}</td></tr>
+
+{% endfor %}
+</table>
+<a href="/">Home</a>

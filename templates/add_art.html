@@ -1,0 +1,44 @@
+<html>
+<script src="static/js/jquery-1.8.1.min.js" type="application/javascript"></script>
+<script src="static/js/app.js" type="application/javascript"></script>
+<script src="static/js/underscore.js" type="application/javascript"></script>
+<script type="text/html" id="art-template">
+	<div id="sell-<%= id %>">
+	<label for="id_form-<%= id %>-country">Country:</label>
+	<select name="form-<%= id %>-country" id="id_form-<%= id %>-country">
+	<option value="" selected="selected">---------</option>
+	</select>
+	<span id="selecttext<%= id %>" style="display: none">Test</span>
+	<label for="id_form-<%= id %>-price">Price:</label>
+	
+	<input type="text" name="form-<%= id %>-price" id="id_form-<%= id %>-price" />
+	<input type="button" class="remove_del" value="Remove"/>
+	</div>
+	
+</script>
+
+<form action="" method="post">
+<input type="hidden" id="error" value="{{error}}"/>
+	{{csrf_token}}
+	{{form}} </br>
+	{{ deliver.management_form }}
+	<div id="sell_to">
+	
+	{%for forms in deliver%}
+	<div id="sell-{{forloop.counter0}}">
+	{{forms}}
+	<span id="selecttext{{forloop.counter0}}" style="display: none">Test</span>
+	{% if error %}
+	{% if forloop.counter0 > 0 %}
+	<input type="button" class="remove_del" value="Remove"/>
+	{% endif %}
+	{% endif %}
+	</div>
+	{% endfor %}
+	</div>
+	
+	</table>
+	<input type="button" name="add_more" id="add_more" value="Add Another" />
+	<input type="submit" />
+</form>
+</html>
