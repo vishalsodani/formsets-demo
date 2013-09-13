@@ -18,27 +18,8 @@ $(document).ready(function () {
 
 	$('#add_more').click(function(){
 
-
-			var count = countForms ();
-			var compiledTmpl = compileTemplate(count);
-			var new_list = new Array;
-			new_list = country_list;
+		addSelectBoxes();
 			
-			$('select[id^="id_form"]').each(function(){
-				
-				var sel_obj = $(this);
-				//filter the country list based on countries already selected in other select boxes
-				new_list = _.reject(new_list,function(obj){return obj.id==sel_obj.val() ;});
-			})
-			
-			$(FORMSET_DIV_ID).append(compiledTmpl);
-			$('#id_form-TOTAL_FORMS').attr('value', count+1);
-			for (var i=0; i < new_list.length; i++) {
-			  $('<option>').val(new_list[i].id).text(new_list[i].name)
-			  .appendTo('#id_form-' + count + '-country');
-			};
-			
-			selectboxHandler();
 	});
 });
 
@@ -133,13 +114,9 @@ var handleRemoveRow = function(event){
 }
 
 var addSelectBoxes = function(){
-	
-	
-	
-			var tmplMarkup = $('#art-template').html();
-			var count = $(FORMSET_DIV_ID).children().length;
-
-			var compiledTmpl = _.template(tmplMarkup, { id : count });
+		
+			var count = countForms();
+			var compiledTmpl = compileTemplate(count);
 			var new_list = new Array;
 			new_list = country_list;
 			
