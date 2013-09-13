@@ -58,7 +58,7 @@ var handleCountrySelection = function(event, data) {
 	replace_selectbox_with.html(select_box.find('option:selected').text());
 	//hidedropdown 
 	select_box.hide();
-	replace_selectbox_with.insertAfter($('#' + id_of_select));
+	replace_selectbox_with.insertAfter(select_box);
 
 	$('select[id^="id_form"]').each(function() {
 		var id_box = $(this).attr('id');
