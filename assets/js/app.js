@@ -2,6 +2,8 @@ var NO_ERROR = '';
 var ERROR_REPORTED = '1';
 var country_list = new Array;
 var is_error_reported_on_form_validation = NO_ERROR;
+var ID_OF_FIRST_TO_COUNTRY = 'id_form-0-country';
+var PATTERN_OF_ID_OF_SELECT = 'select[id^="id_form"]';
 
 $(document).ready(function () {
 	
@@ -9,7 +11,8 @@ $(document).ready(function () {
 	var from_country = $('#id_country').val();
 	buildCountryList();
 	initialize();
-	$('#id_form-0-country').trigger('change',[from_country])
+	var default_country_to_select = $('#id_form-0-country');
+	default_country_to_select.trigger('change',[from_country]);
 	$('select[id^="id_form"]').on('change',handleCountrySelection);
 
 	$('#add_more').click(function(){
@@ -71,9 +74,9 @@ var handleCountrySelection = function (event,data) {
   $(event.target).css('display','none')
   
   
-  if (id_of_select === 'id_form-0-country' ){
+  if (id_of_select === ID_OF_FIRST_TO_COUNTRY ){
   	
-  	$(event.target).parent().children('span').insertAfter($('#id_form-0-country'))
+  	$(event.target).parent().children('span').insertAfter($('#id_form-0-country'));
  }
  
  if(is_error_reported_on_form_validation === '1'){
@@ -147,15 +150,7 @@ var addSelectBoxes = function(){
 			  .appendTo('#id_form-' + count + '-country');
 			};
 			
-			$('select[id^="id_form"]').each(function(){
-				
-				var sel_obj = $(this);
-				sel_obj.off();
-				$('.remove_del').off();
-				sel_obj.on('change',handleCountrySelection);
-				$('.remove_del').on('click',handleRemoveRow);
-				
-			})
+			selectboxHandler();
 }
 
 function updateElementIndex(el, prefix, ndx) {
@@ -173,7 +168,7 @@ function updateElementIndex(el, prefix, ndx) {
 
 var selectboxHandler = function(){
 	
-	$('select[id^="id_form"]').each(function(){
+	$(PATTERN_OF_ID_OF_SELECT).each(function(){
 				
 				var sel_obj = $(this);
 				sel_obj.off();
