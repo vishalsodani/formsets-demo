@@ -15,7 +15,6 @@ def new_art(request):
         if art_form.is_valid() and deliver_form.is_valid():
             art = Art()
             art.name = art_form['name'].value()
-
             art.country = Country.objects.get(id = int(art_form['country'].value()))
             art.save()
             deliver_form = ArtDeliverFormSet(request.POST)
@@ -27,7 +26,7 @@ def new_art(request):
                 delivery.save()
             return HttpResponseRedirect('/list')
         else:
-             return render_to_response('add_art.html',{'form':art_form,'deliver':deliver_form,'error':1})
+            return render_to_response('add_art.html',{'form':art_form,'deliver':deliver_form,'error':1})
 
     form = ArtForm(initial={'country': Country.objects.get(id=3)})
 
