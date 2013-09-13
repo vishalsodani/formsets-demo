@@ -48,8 +48,9 @@ var buildCountryList = function(){
 		var country = {};
 		country.id = $(this).val();
 		country.name = $(this).text();
-		country_list.push(country);
-		_.reject(country_list,function(obj){return obj.id=='' ;});
+		if (country.id !== ''){
+			country_list.push(country);
+		}
 	})
 }
 
