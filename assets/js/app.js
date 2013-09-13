@@ -13,7 +13,7 @@ $(document).ready(function () {
 	initialize();
 	var default_country_to_select = $('#id_form-0-country');
 	default_country_to_select.trigger('change',[from_country]);
-	$('select[id^="id_form"]').on('change',handleCountrySelection);
+	$(PATTERN_OF_ID_OF_SELECT).on('change',handleCountrySelection);
 
 	$('#add_more').click(function(){
 		   //the template defined in add_art called art-template
