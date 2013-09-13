@@ -3,12 +3,8 @@ var is_error = '';
 $(document).ready(function () {
 	
 	is_error = $('#error').val();
-	//this gets the value of countryfrom (your case maybe different)
 	var from_country = $('#id_country').val();
-	//this function builds a list of countries
-	// this master list is used to remove and add countries from select boxes
 	buildCountryList();
-	
 
 	if (is_error === '')
 	{
@@ -20,15 +16,8 @@ $(document).ready(function () {
 	
 	if(is_error === '1'){
 		
-		$('select[id^="id_form"]').each(function(){
-				
-				var sel_obj = $(this);
-				sel_obj.off();
-				$('.remove_del').off();
-				sel_obj.on('change',handleCountrySelection);
-				$('.remove_del').on('click',handleRemoveRow);
-				
-			})
+		selectboxHandler();
+		
 	}
 	// these next 4 methods manually trigger change event for selectboxes
 	$('#id_form-0-country').trigger('change',[from_country])
@@ -77,15 +66,7 @@ $(document).ready(function () {
 			  .appendTo('#id_form-' + count + '-country');
 			};
 			
-			$('select[id^="id_form"]').each(function(){
-				
-				var sel_obj = $(this);
-				sel_obj.off();
-				$('.remove_del').off();
-				sel_obj.on('change',handleCountrySelection);
-				$('.remove_del').on('click',handleRemoveRow);
-				
-			})
+			selectboxHandler();
 	});
 });
 
@@ -135,7 +116,6 @@ var handleCountrySelection = function (event,data) {
 			})
 }
 
-
 var handleRemoveRow = function(event){
 	
 	var parent = $(event.target).parent();
@@ -169,7 +149,6 @@ var handleRemoveRow = function(event){
     })
 	
 }
-
 
 var addSelectBoxes = function(){
 	
@@ -219,3 +198,17 @@ function updateElementIndex(el, prefix, ndx) {
 		var replacement_name = prefix_name + '-' + ndx;
 		if (el.name) el.name = el.name.replace(id_regex_name, replacement_name);
 	}
+
+var selectboxHandler = function(){
+	
+	$('select[id^="id_form"]').each(function(){
+				
+				var sel_obj = $(this);
+				sel_obj.off();
+				$('.remove_del').off();
+				sel_obj.on('change',handleCountrySelection);
+				$('.remove_del').on('click',handleRemoveRow);
+				
+			})
+	
+}
