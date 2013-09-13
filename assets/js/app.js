@@ -4,6 +4,7 @@ var country_list = new Array;
 var is_error_reported_on_form_validation = NO_ERROR;
 var ID_OF_FIRST_TO_COUNTRY = 'id_form-0-country';
 var PATTERN_OF_ID_OF_SELECT = 'select[id^="id_form"]';
+var FORMSET_DIV_ID = '#sell_to';
 
 $(document).ready(function () {
 	
@@ -16,12 +17,10 @@ $(document).ready(function () {
 	$(PATTERN_OF_ID_OF_SELECT).on('change',handleCountrySelection);
 
 	$('#add_more').click(function(){
-		   //the template defined in add_art called art-template
-			var tmplMarkup = $('#art-template').html(); 
-			//count no of forms
-			var count = $('#sell_to').children().length;
-			// pass the id
-			var compiledTmpl = _.template(tmplMarkup, { id : count });
+
+
+			var count = countForms ();
+			var compiledTmpl = compileTemplate(count);
 			var new_list = new Array;
 			new_list = country_list;
 			var selectboxes =  $('select[id^="id_form"]');
@@ -33,7 +32,7 @@ $(document).ready(function () {
 				new_list = _.reject(new_list,function(obj){return obj.id==sel_obj.val() ;});
 			})
 			
-			$('#sell_to').append(compiledTmpl);
+			$(FORMSET_DIV_ID).append(compiledTmpl);
 			$('#id_form-TOTAL_FORMS').attr('value', count+1);
 			for (var i=0; i < new_list.length; i++) {
 			  $('<option>').val(new_list[i].id).text(new_list[i].name)
@@ -45,6 +44,15 @@ $(document).ready(function () {
 });
 
 
+var countForms = function(){
+	return $(FORMSET_DIV_ID).children().length;
+}
+
+var compileTemplate = function(value_for_id){
+	var tmplMarkup = $('#art-template').html();
+	var compiledTmpl = _.template(tmplMarkup, { id : value_for_id });
+	return compiledTmpl;
+}
 var buildCountryList = function(){
 	
 	$("#id_form-0-country>option").each(function(){
@@ -110,8 +118,8 @@ var handleRemoveRow = function(event){
 			})
 	}
 	$(parent).remove();
-	var count = $('#sell_to').children().length;
-	var forms = $('#sell_to');
+	var count = $(FORMSET_DIV_ID).children().length;
+	var forms = $(FORMSET_DIV_ID);
 	$('#id_form-TOTAL_FORMS').attr('value', count);
 	prefix = "id_form"
     var i = 0;
@@ -130,7 +138,7 @@ var addSelectBoxes = function(){
 	
 	
 			var tmplMarkup = $('#art-template').html();
-			var count = $('#sell_to').children().length;
+			var count = $(FORMSET_DIV_ID).children().length;
 
 			var compiledTmpl = _.template(tmplMarkup, { id : count });
 			var new_list = new Array;
@@ -143,7 +151,7 @@ var addSelectBoxes = function(){
 				new_list = _.reject(new_list,function(obj){return obj.id==sel_obj.val() ;});
 			})
 			
-			$('#sell_to').append(compiledTmpl);
+			$(FORMSET_DIV_ID).append(compiledTmpl);
 			$('#id_form-TOTAL_FORMS').attr('value', count+1);
 			for (var i=0; i < new_list.length; i++) {
 			  $('<option>').val(new_list[i].id).text(new_list[i].name)
@@ -196,7 +204,7 @@ var initialize = function(){
 	if(is_error_reported_on_form_validation === ERROR_REPORTED){
 		
 		selectboxHandler();
-		var count = $('#sell_to').children().length;
+		var count = $(FORMSET_DIV_ID).children().length;
 		for (var i=0; i < count; i++) {
 		  var ctry = $('#id_form-'+ i+ '-country').val();
 		  if (ctry !== ''){
