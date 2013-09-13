@@ -44,27 +44,27 @@ var buildCountryList = function() {
 }
 var handleCountrySelection = function(event, data) {
 
+	var select_box = $(event.target);
 	if( typeof data !== 'undefined') {
 
-		$(event.target).val(data);
+		select_box.val(data);
 
 	}
-	var countryid_selected = $(event.target).val();
-
-	var id_of_select = $(event.target).attr('id');
-
-	$(event.target).parent().children('span').show();
-
-	$(event.target).parent().children('span').html($(event.target).find('option:selected').text());
-	$(event.target).css('display', 'none')
+	var countryid_selected = select_box.val();
+	var id_of_select = select_box.attr('id');
+	var replace_selectbox_with = select_box.parent().children('span');
+	replace_selectbox_with.show(); 
+	//displayCountryNameinSpan
+	replace_selectbox_with.html(select_box.find('option:selected').text()); 
+	select_box.css('display', 'none')//hidedropdown
 
 	if(id_of_select === ID_OF_FIRST_TO_COUNTRY) {
 
-		$(event.target).parent().children('span').insertAfter($('#id_form-0-country'));
+		replace_selectbox_with.insertAfter($('#id_form-0-country'));
 	}
 
 	if(is_error_reported_on_form_validation === '1') {
-		$(event.target).parent().children('span').insertAfter($('#' + id_of_select));
+		replace_selectbox_with.insertAfter($('#' + id_of_select));
 	}
 
 	$('select[id^="id_form"]').each(function() {
