@@ -55,22 +55,15 @@ var handleCountrySelection = function(event, data) {
 	var replace_selectbox_with = select_box.parent().children('span');
 	replace_selectbox_with.show(); 
 	//displayCountryNameinSpan
-	replace_selectbox_with.html(select_box.find('option:selected').text()); 
-	select_box.css('display', 'none')//hidedropdown
-
-	if(id_of_select === ID_OF_FIRST_TO_COUNTRY) {
-
-		replace_selectbox_with.insertAfter($('#id_form-0-country'));
-	}
-
-	if(is_error_reported_on_form_validation === '1') {
-		replace_selectbox_with.insertAfter($('#' + id_of_select));
-	}
+	replace_selectbox_with.html(select_box.find('option:selected').text());
+	//hidedropdown 
+	select_box.hide();
+	replace_selectbox_with.insertAfter($('#' + id_of_select));
 
 	$('select[id^="id_form"]').each(function() {
 		var id_box = $(this).attr('id');
 		if(id_box !== id_of_select) {
-			$('#' + id_box + ' option[value=' + countryid_selected + ']').remove();
+			$(this).children('option[value=' + countryid_selected + ']').remove();
 		}
 	})
 }
