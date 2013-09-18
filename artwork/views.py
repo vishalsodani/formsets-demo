@@ -13,16 +13,19 @@ def new_art(request):
         art_form = ArtForm(request.POST)
         deliver_form = ArtDeliverFormSet(request.POST)
         if art_form.is_valid() and deliver_form.is_valid():
+            art_cleaneddata = art_form.cleaned_data
+
             art = Art()
-            art.name = art_form['name'].value()
-            art.country = Country.objects.get(id = int(art_form['country'].value()))
+            art.name = art_cleaneddata['name']
+            art.country = art_cleaneddata['country']
             art.save()
-            deliver_form = ArtDeliverFormSet(request.POST)
+
             for frm in deliver_form:
+                deliver_form_cleandata = frm.cleaned_data
                 delivery = Delivery()
-                delivery.country = Country.objects.get(id=int(frm['country'].value()))
+                delivery.country = deliver_form_cleandata['country']
                 delivery.art = art
-                delivery.price = frm['price'].value()
+                delivery.price = deliver_form_cleandata['price']
                 delivery.save()
             return HttpResponseRedirect('/list')
         else:
